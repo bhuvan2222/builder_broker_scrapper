@@ -57,7 +57,7 @@ async def analyze_brochure(file: Annotated[UploadFile, File()]):
         raise HTTPException(status_code=400, detail="Only PDF files are supported.")
 
     content = await file.read()
-    if len(content) > 25 * 1024 * 1024:
+    if len(content) > 301024 * 1024:
         raise HTTPException(status_code=400, detail="File too large (max 25 MB).")
 
     def _extract_all() -> tuple[str, list]:
