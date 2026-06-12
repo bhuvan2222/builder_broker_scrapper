@@ -70,7 +70,7 @@ async function runAnalysis() {
   formData.append("file", selectedFile);
 
   // Each step shows for exactly 1 second; run all steps before rendering
-  const MIN_STEP_MS = 2000;
+  const MIN_STEP_MS = 3000;
   const animationDone = (async () => {
     for (const [step, label, sub] of _LOADING_STEPS) {
       setStep(step);
