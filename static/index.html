@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Builder Broker Intelligence</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="logo-row">
+      <div class="logo-mark">BB</div>
+      <span class="logo-text">BuilderBroker</span>
+    </div>
+
+    <div id="upload-zone" class="upload-zone">
+      <input type="file" id="file-input" accept=".pdf" />
+      <div class="upload-inner">
+        <div class="upload-icon">📄</div>
+        <div class="upload-hint">Drop PDF or click to browse</div>
+      </div>
+    </div>
+
+    <div id="file-preview"></div>
+
+    <button id="analyze-btn" class="btn-primary" disabled>⚡ Analyze Brochure</button>
+
+    <div class="sidebar-nav">
+      <div class="nav-label">PIPELINE</div>
+      <div class="sstep" id="step-1"><span class="sicon">1</span> Upload</div>
+      <div class="sstep" id="step-2"><span class="sicon">2</span> AI Analysis</div>
+      <div class="sstep" id="step-3"><span class="sicon">3</span> Scraping</div>
+      <div class="sstep" id="step-4"><span class="sicon">4</span> Done</div>
+    </div>
+
+    <div id="project-mini" style="display:none"></div>
+  </aside>
+
+  <!-- ── Main Panel ── -->
+  <div class="main-panel">
+
+    <!-- Loading overlay — shown during analysis, hidden otherwise -->
+    <div id="loader-overlay" class="loader-overlay" style="display:none">
+      <div class="spinner"></div>
+      <div id="loader-label" class="loader-label">Starting…</div>
+      <div id="loader-sub" class="loader-sub"></div>
+    </div>
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-search-icon">🔍</span>
+        <span class="topbar-title" id="topbar-title">Upload a brochure PDF to get started</span>
+      </div>
+      <div class="topbar-right" id="topbar-actions" style="display:none">
+        <button class="btn-ghost" onclick="downloadCsv()">↑ Export CSV</button>
+        <input id="email-input" type="email" placeholder="you@example.com" class="email-top-input" />
+        <button class="btn-primary-sm" onclick="sendCsv()">✉ Send</button>
+        <span id="email-status" class="email-status-msg"></span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <div id="global-error" class="error-banner" style="display:none"></div>
+      <div id="results-section">
+        <div class="empty-home">
+          <div class="ei">🏗</div>
+          <h2>Builder Broker Intelligence</h2>
+          <p>Upload a project brochure PDF to discover brokers & agents near the project location.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: builder-broker-scrapper
+    runtime: python
+    buildCommand: apt-get install -y poppler-utils && pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: llama-3.3-70b-versatile
+      - key: GROQ_VISION_MODEL
+        value: meta-llama/llama-4-scout-17b-16e-instruct
+      - key: SCRAPER_ENABLED
+        value: "true"
+      - key: APIFY_API_TOKEN
+        sync: false
+      - key: APIFY_GOOGLE_MAPS_ACTOR
+        value: compass/crawler-google-places
+      - key: APIFY_JUSTDIAL_ACTOR
+        value: jupri/justdial-scraper
+      - key: APIFY_99ACRES_ACTOR
+        value: solidcode/99acres-scraper
+      - key: APIFY_REALTOR_ACTOR
+        value: samstorm/real-estate-lead-scraper
+      - key: APIFY_MAGICBRICKS_ACTOR
+        value: thirdwatch/magicbricks-scraper
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
