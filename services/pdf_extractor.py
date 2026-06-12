@@ -19,15 +19,19 @@ def extract_text_from_pdf(pdf_path: str) -> str:
 
 def pdf_to_images_base64(pdf_path: str, max_pages: int = 3, dpi: int = 150) -> list[str]:
     """Convert first N pages of PDF to base64 JPEG strings for vision models."""
-    from pdf2image import convert_from_path
+    import pypdfium2 as pdfium
+    from PIL import Image
 
-    images = convert_from_path(pdf_path, dpi=dpi, first_page=1, last_page=max_pages)
+    pdf = pdfium.PdfDocument(pdf_path)
+    scale = dpi / 72
     result = []
-    for img in images:
-        # Resize if too wide (Groq vision has size limits)
+    for i in range(min(max_pages, len(pdf))):
+        page = pdf[i]
+        bitmap = page.render(scale=scale, rotation=0)
+        img = bitmap.to_pil()
         if img.width > 1280:
             ratio = 1280 / img.width
-            img = img.resize((1280, int(img.height * ratio)))
+            img = img.resize((1280, int(img.height * ratio)), Image.LANCZOS)
         buf = io.BytesIO()
         img.save(buf, format="JPEG", quality=82)
         result.append(base64.b64encode(buf.getvalue()).decode())
